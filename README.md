@@ -3,3 +3,5 @@
   - getState
   - dispatch
   - subscribe
+
+# bindActionCreators
