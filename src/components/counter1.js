@@ -1,33 +1,19 @@
 import React from "react";
-import { bindActionCreators } from "../redux";
-import store from "../store";
-import count1Actions from '../store/actions/counter1'
-
-const actions = bindActionCreators(count1Actions, store.dispatch);
-console.log(actions, store.getState())
+import { connect } from "../react-redux";
+import actions from "../store/actions/counter1";
 class Counter1 extends React.Component {
-  state = {
-    number: 0,
-  };
-  componentDidMount() {
-    this.unsubscribe = store.subscribe(() => {
-      this.setState({ number: store.getState().counter1.number });
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
   render() {
     return (
       <div>
-        <p>{this.state.number}</p>
-        <button onClick={actions.add}>+</button>
-        <button onClick={actions.minus}>-</button>
+        <p>{this.props.number}</p>
+        <button onClick={this.props.add}>+</button>
+        <button onClick={this.props.minus}>-</button>
       </div>
     );
   }
 }
 
-export default Counter1;
+const mapStateToProps = (state) => state.counter1;
+const mapDispatchToProps = actions;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter1);
