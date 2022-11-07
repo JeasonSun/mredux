@@ -9,6 +9,9 @@ export function createStore(reducer) {
 
   function subscribe(listener) {
     listeners.push(listener);
+    return function () {
+      listeners = listeners.filter((l) => l !== listener);
+    };
   }
 
   function getState() {
