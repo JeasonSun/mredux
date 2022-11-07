@@ -1,17 +1,17 @@
 import React from "react";
 import { bindActionCreators } from "../redux";
 import store from "../store";
-import count1Actions from '../store/actions/counter1'
+import count2Actions from '../store/actions/counter2'
 
-const actions = bindActionCreators(count1Actions, store.dispatch);
-console.log(actions, store.getState())
-class Counter1 extends React.Component {
+const actions = bindActionCreators(count2Actions, store.dispatch);
+console.log(actions)
+class Counter2 extends React.Component {
   state = {
     number: 0,
   };
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
-      this.setState({ number: store.getState().counter1.number });
+      this.setState({ number: store.getState().counter2.number });
     });
   }
 
@@ -30,4 +30,4 @@ class Counter1 extends React.Component {
   }
 }
 
-export default Counter1;
+export default Counter2;
