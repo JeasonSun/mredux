@@ -1,13 +1,16 @@
-function applyMiddleware(logger) {
+import compose from "./compose";
+
+function applyMiddleware(...middlewares) {
   return function (createStore) {
-    return function (reducers) {
-      const store = createStore(reducers);
+    return function (reducers, initialState) {
+      const store = createStore(reducers, initialState);
       let dispatch;
       const middlewareAPI = {
         getState: store.getState,
         dispatch: (action) => dispatch(action),
       };
-      dispatch = logger(middlewareAPI)(store.dispatch);
+      const chain = middlewares.map((middleware) => middleware(middlewareAPI));
+      dispatch = compose(...chain)(store.dispatch);
       return {
         ...store,
         dispatch,
